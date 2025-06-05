@@ -1,5 +1,5 @@
 ##-----------------------------------------------------------------------------
-## Tagging Module – Applies standard tags to all resources
+# Standard Tagging Module – Applies standard tags to all resources for traceability
 ##-----------------------------------------------------------------------------
 module "labels" {
   source          = "terraform-az-modules/tags/azure"
@@ -14,9 +14,9 @@ module "labels" {
   extra_tags      = var.extra_tags
 }
 
-## -----------------------------------------------------------------------------
-## Log Analytics Workspace - Deploy Log Analytics on Azure
-## -----------------------------------------------------------------------------
+##-----------------------------------------------------------------------------
+## Log Analytics Workspace – Deploy Log Analytics workspace with diagnostic monitoring
+##-----------------------------------------------------------------------------
 
 resource "azurerm_log_analytics_workspace" "main" {
   count                      = var.enabled && var.create_log_analytics_workspace == true ? 1 : 0
@@ -31,10 +31,9 @@ resource "azurerm_log_analytics_workspace" "main" {
   tags                       = module.labels.tags
 }
 
-## -----------------------------------------------------------------------------
-## Diagnostic Settings for Log Analytics
-## -----------------------------------------------------------------------------
-
+##-----------------------------------------------------------------------------
+# Diagnostic Settings – Enables log collection for auditing and monitoring
+##-----------------------------------------------------------------------------
 resource "azurerm_monitor_diagnostic_setting" "example" {
   count                          = var.enabled && var.diagnostic_setting_enable ? 1 : 0
   name                           = var.resource_position_prefix ? format("law-diag-%s", local.name) : format("%s-law-diag", local.name)
@@ -45,17 +44,17 @@ resource "azurerm_monitor_diagnostic_setting" "example" {
   log_analytics_workspace_id     = var.log_analytics_workspace_id
   log_analytics_destination_type = var.log_analytics_destination_type
   dynamic "enabled_log" {
-    for_each = toset(var.diagnostic_setting_enabled_log_categories)
+    for_each = var.logs
     content {
-      category = enabled_log.value
+      category_group = lookup(enabled_log.value, "category_group", null)
+      category       = lookup(enabled_log.value, "category", null)
     }
   }
-
   dynamic "metric" {
-    for_each = toset(concat(local.diagnostic_setting_metric_categories, var.diagnostic_setting_enabled_metric_categories))
+    for_each = var.metrics
     content {
-      category = metric.value
-      enabled  = contains(var.diagnostic_setting_enabled_metric_categories, metric.value)
+      category = lookup(metric.value, "category", null)
+      enabled  = lookup(metric.value, "enabled", true)
     }
   }
   lifecycle {

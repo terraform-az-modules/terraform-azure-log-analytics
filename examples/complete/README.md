@@ -1,46 +1,52 @@
 <!-- BEGIN_TF_DOCS -->
 
-# Terraform Azure Module Template
+# Azure Log Analytics Module
 
-This directory contains an example usage of the **terraform-azure-module-template**. It demonstrates how to use the module with default settings or with custom configurations.
+This example demonstrates how to use the `terraform-azure-log-analytics` module to deploy an Azure Log Analytics.
 
 ---
 
-## 📋 Requirements
+## ✅ Requirements
 
 | Name      | Version   |
 |-----------|-----------|
 | Terraform | >= 1.6.6  |
-| Azurerm   | >= 3.116.0|
+| Azurerm   | >= 3.90.0 |
 
 ---
 
 ## 🔌 Providers
 
-None specified in this example.
+No providers are explicitly defined in this example.
 
 ---
 
 ## 📦 Modules
 
-None specified in this example.
+| Name            | Source                              | Version |
+|-----------------|-------------------------------------|---------|
+| resource_group  | terraform-az-modules/resource-group/azure    | 1.0.0   |
+| log_analytics            | ../../                              | n/a     |
 
 ---
 
 ## 🏗️ Resources
 
-No resources are directly created in this example.
+No additional resources are directly created in this example.
 
 ---
 
 ## 🔧 Inputs
 
-No input variables are defined in this example.
+_No input variables are defined in this example._
 
 ---
 
 ## 📤 Outputs
 
-No outputs are defined in this example.
+| Name                        | Description                                                                 |
+|-----------------------------|-----------------------------------------------------------------------------|
+| `workspace_id`   | The ID of the Log Analytics Workspace                                          |
+| `workspace_customer_id`        | The Customer ID for the Log Analytics Workspace                               |
 
 <!-- END_TF_DOCS -->
