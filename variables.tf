@@ -101,12 +101,6 @@ variable "log_analytics_workspace_sku" {
   description = "The SKU of the Log Analytics Workspace. Possible values are Free, PerNode, Premium, Standard, Standalone, Unlimited, CapacityReservation, and PerGB2018."
 }
 
-variable "create_log_analytics_workspace" {
-  type        = bool
-  default     = true
-  description = "Flag to control whether to create a new Log Analytics Workspace or use an existing one."
-}
-
 variable "retention_in_days" {
   type        = number
   default     = null
@@ -137,12 +131,6 @@ variable "log_analytics_destination_type" {
   description = "The destination type for logs sent to Log Analytics workspace. Possible values are AzureDiagnostics and Dedicated."
 }
 
-variable "Metric_enable" {
-  type        = bool
-  default     = true
-  description = "Flag to enable diagnostic metrics collection."
-}
-
 variable "diagnostic_setting_enable" {
   type        = bool
   default     = false
@@ -153,12 +141,6 @@ variable "log_analytics_workspace_id" {
   type        = string
   default     = null
   description = "The ID of an existing Log Analytics Workspace to send diagnostic data to."
-}
-
-variable "category" {
-  type        = string
-  default     = null
-  description = "The name of a diagnostic log category for this resource."
 }
 
 variable "storage_account_id" {

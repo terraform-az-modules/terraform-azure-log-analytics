@@ -19,7 +19,7 @@ module "labels" {
 ##-----------------------------------------------------------------------------
 
 resource "azurerm_log_analytics_workspace" "main" {
-  count                      = var.enabled && var.create_log_analytics_workspace == true ? 1 : 0
+  count                      = var.enabled ? 1 : 0
   name                       = var.resource_position_prefix ? format("law-%s", local.name) : format("%s-law", local.name)
   location                   = var.location
   resource_group_name        = var.resource_group_name
