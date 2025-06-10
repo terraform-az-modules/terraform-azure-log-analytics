@@ -34,7 +34,7 @@ resource "azurerm_log_analytics_workspace" "main" {
 ##-----------------------------------------------------------------------------
 # Diagnostic Settings – Enables log collection for auditing and monitoring
 ##-----------------------------------------------------------------------------
-resource "azurerm_monitor_diagnostic_setting" "example" {
+resource "azurerm_monitor_diagnostic_setting" "diagnostic" {
   count                          = var.enabled && var.diagnostic_setting_enable ? 1 : 0
   name                           = var.resource_position_prefix ? format("law-diag-%s", local.name) : format("%s-law-diag", local.name)
   target_resource_id             = join("", azurerm_log_analytics_workspace.main[*].id)
