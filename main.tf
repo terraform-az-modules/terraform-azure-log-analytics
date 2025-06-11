@@ -13,6 +13,7 @@ module "labels" {
   deployment_mode = var.deployment_mode
   extra_tags      = var.extra_tags
 }
+
 ##------------------------------------------------------------------------------------
 ## Log Analytics Workspace – Deploy Log Analytics workspace with diagnostic monitoring
 ##------------------------------------------------------------------------------------
