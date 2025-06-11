@@ -13,11 +13,9 @@ module "labels" {
   deployment_mode = var.deployment_mode
   extra_tags      = var.extra_tags
 }
-
-##-----------------------------------------------------------------------------
+##------------------------------------------------------------------------------------
 ## Log Analytics Workspace – Deploy Log Analytics workspace with diagnostic monitoring
-##-----------------------------------------------------------------------------
-
+##------------------------------------------------------------------------------------
 resource "azurerm_log_analytics_workspace" "main" {
   count                      = var.enabled ? 1 : 0
   name                       = var.resource_position_prefix ? format("law-%s", local.name) : format("%s-law", local.name)
@@ -36,7 +34,7 @@ resource "azurerm_log_analytics_workspace" "main" {
 ##-----------------------------------------------------------------------------
 resource "azurerm_monitor_diagnostic_setting" "diagnostic" {
   count                          = var.enabled && var.diagnostic_setting_enable ? 1 : 0
-  name                           = var.resource_position_prefix ? format("law-diag-%s", local.name) : format("%s-law-diag", local.name)
+  name                           = var.resource_position_prefix ? format("diag-law-%s", local.name) : format("%s-diag-law", local.name)
   target_resource_id             = join("", azurerm_log_analytics_workspace.main[*].id)
   storage_account_id             = var.storage_account_id
   eventhub_name                  = var.eventhub_name
