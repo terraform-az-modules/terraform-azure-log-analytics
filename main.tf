@@ -49,11 +49,10 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostic" {
       category       = lookup(enabled_log.value, "category", null)
     }
   }
-  dynamic "metric" {
+  dynamic "enabled_metric" {
     for_each = var.metric_enabled ? ["AllMetrics"] : []
     content {
-      category = metric.value
-      enabled  = true
+      category = enabled_metric.value
     }
   }
   lifecycle {
