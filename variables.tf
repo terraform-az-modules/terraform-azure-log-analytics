@@ -109,7 +109,7 @@ variable "retention_in_days" {
 
 variable "daily_quota_gb" {
   type        = string
-  default     = "-1"
+  default     = "1"
   description = "The workspace daily quota for ingestion in GB. Set to -1 for unlimited ingestion."
 }
 
