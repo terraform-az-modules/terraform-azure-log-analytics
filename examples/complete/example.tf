@@ -21,7 +21,7 @@ module "resource_group" {
 # ------------------------------------------------------------------------------
 module "log_analytics" {
   source = "../../"
-  name   = "core"
+  name   = "core1"
   # custom_name            = ""  # Optional: Overrides default naming logic with a fully custom name. Cannot be used if `name` is set.
   environment         = "dev"
   label_order         = ["name", "environment", "location"] # locations logic are pre configured in the labels module
