@@ -16,7 +16,7 @@ jobs:
       - id: dircheck
         run: |
           # Set true if the directory exists (and has at least one file); else false
-          if [ -d "examples/**" ] && [ "$(ls -A examples/complete 2>/dev/null)" ]; then
+          if [ -d "examples/**" ] && [ "$(ls -A examples/** 2>/dev/null)" ]; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
