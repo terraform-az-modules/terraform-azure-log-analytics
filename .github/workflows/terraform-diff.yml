@@ -7,26 +7,8 @@ on:
 
 
 jobs:
-  precheck:
-    runs-on: ubuntu-latest
-    outputs:
-      exists: ${{ steps.dircheck.outputs.exists }}
-    steps:
-      - uses: actions/checkout@v4
-      - id: dircheck
-        run: |
-          # Set true if the directory exists (and has at least one file); else false
-          if [ -d "examples/complete" ] && [ "$(ls -A examples/complete 2>/dev/null)" ]; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-          fi
-
   complete-example:
-    needs: precheck
-    # Allow workflow to run regardless of examples/complete existence
-    if: needs.precheck.outputs.exists == 'true'
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-pr-checks.yaml@master
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-pr-checks.yaml@fix/terraform-diff-workflows
     with:
       provider: 'azurerm'
       terraform_directory: 'examples/complete'
