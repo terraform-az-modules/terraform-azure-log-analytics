@@ -16,7 +16,7 @@ jobs:
       - id: dircheck
         run: |
           # Set true if the directory exists (and has at least one file); else false
-          if [ -d "examples/**" ] && [ "$(ls -A examples/** 2>/dev/null)" ]; then
+          if [ -d "examples/complete" ] && [ "$(ls -A examples/complete 2>/dev/null)" ]; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
@@ -24,7 +24,8 @@ jobs:
 
   complete-example:
     needs: precheck
-    if: needs.precheck.outputs.exists == 'true'
+    # Allow workflow to run regardless of examples/complete existence
+    if: always()
     uses: clouddrove/github-shared-workflows/.github/workflows/tf-pr-checks.yaml@master
     with:
       provider: 'azurerm'
