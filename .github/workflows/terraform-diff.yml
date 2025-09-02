@@ -25,7 +25,7 @@ jobs:
   complete-example:
     needs: precheck
     # Allow workflow to run regardless of examples/complete existence
-    if: always()
+    if: needs.precheck.outputs.exists == 'true'
     uses: clouddrove/github-shared-workflows/.github/workflows/tf-pr-checks.yaml@master
     with:
       provider: 'azurerm'
