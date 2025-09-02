@@ -1,0 +1,30 @@
+provider "azurerm" {
+  features {}
+}
+
+##-----------------------------------------------------------------------------
+## Resource Group module call
+## Resource group in which all resources will be deployed.
+##-----------------------------------------------------------------------------
+module "resource_group" {
+  source      = "terraform-az-modules/resource-group/azure"
+  version     = "1.0.0"
+  name        = "core"
+  environment = "dev"
+  location    = "centralus"
+  label_order = ["name", "environment", "location"]
+}
+
+
+# ------------------------------------------------------------------------------
+# Log Analytics
+# ------------------------------------------------------------------------------
+module "log_analytics" {
+  source = "../../"
+  name   = "core1"
+  # custom_name            = ""  # Optional: Overrides default naming logic with a fully custom name. Cannot be used if `name` is set.
+  environment         = "dev2"
+  label_order         = ["name", "environment", "location"] # locations logic are pre configured in the labels module
+  resource_group_name = module.resource_group.resource_group_name
+  location            = module.resource_group.resource_group_location
+}
